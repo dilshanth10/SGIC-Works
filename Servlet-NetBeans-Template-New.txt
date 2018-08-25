@@ -1,0 +1,63 @@
+<#if package?? && package != "">
+package ${package};
+</#if>
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+<#if classAnnotation??>
+import javax.servlet.annotation.WebServlet;
+</#if>
+<#if includeInitParams??>
+import javax.servlet.annotation.WebInitParam;
+</#if>
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+<#if classAnnotation??>
+${classAnnotation}
+</#if>
+public class ${name} extends HttpServlet {
+
+<#if java15style??>
+    @Override
+</#if>
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        
+    } 
+
+<#if java15style??>
+    @Override
+</#if>
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        
+    }
+
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+<#if java17style?? && java17style>
+        try (PrintWriter out = response.getWriter()) {
+<#else>
+        PrintWriter out = response.getWriter();
+        try {
+</#if>
+
+<#if !java17style?? || !java17style>
+        } finally {
+            out.close();
+</#if>
+        }
+    }
+
+<#if java15style??>
+    @Override
+</#if>
+    public String getServletInfo() {
+        return "Short description";
+    }
+}
